@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class AuthorPanel extends JPanel
+public class AuthorPanel extends ValidPanel
 {
     
     public final JTextField idField, lastNameField, firstNameField;
@@ -44,5 +44,11 @@ public class AuthorPanel extends JPanel
         setLayout(new BorderLayout(5, 5));
         add(labelPanel, WEST);
         add(fieldPanel, CENTER);
+    }
+    
+    @Override
+    public boolean validate()
+    {
+        return true;//TODO
     }
 }
