@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class GenrePanel extends JPanel
+public class GenrePanel extends ValidPanel
 {
     
     public final JTextField idField, titleField;
@@ -40,5 +40,11 @@ public class GenrePanel extends JPanel
         setLayout(new BorderLayout(5, 5));
         add(labelPanel, WEST);
         add(fieldPanel, CENTER);
+    }
+    
+    @Override
+    public boolean validate()
+    {
+        return true;//TODO
     }
 }
