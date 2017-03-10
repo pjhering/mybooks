@@ -6,6 +6,8 @@ import static java.awt.BorderLayout.WEST;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.JOptionPane.WARNING_MESSAGE;
 import javax.swing.JTextField;
 
 public class AuthorPanel extends ValidPanel
@@ -49,6 +51,19 @@ public class AuthorPanel extends ValidPanel
     @Override
     public boolean doValidation()
     {
-        return true;//TODO
+        String lastName = lastNameField.getText();
+        if(lastName != null)
+        {
+            lastName = lastName.trim();
+            lastNameField.setText(lastName);
+            
+            if(lastName.length() > 0)
+            {
+                return true;
+            }
+        }
+        showMessageDialog("last name is required", WARNING_MESSAGE);
+        lastNameField.requestFocus();
+        return false;
     }
 }
