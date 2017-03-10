@@ -38,6 +38,11 @@ public class PreviewTop
         a1.getBookSet().add(b1);
         a1.getBookSet().add(b2);
         data.add(a1);
+        Book b7 = new Book(id++, "Watchmen");
+        b7.getGenreSet().add(g1);
+        Author a4 = new Author(id++, "Moore", "Alan");
+        a4.getBookSet().add(b7);
+        data.add(a4);
         
         Genre g2 = new Genre(id++, "Fiction");
         Book b3 = new Book(id++, "Slaughterhouse 5");
@@ -48,6 +53,14 @@ public class PreviewTop
         a2.getBookSet().add(b3);
         a2.getBookSet().add(b4);
         data.add(a2);
+        Book b5 = new Book(id++, "Breathing Lessons");
+        b5.getGenreSet().add(g2);
+        Book b6 = new Book(id++, "The Accidental Tourist");
+        b6.getGenreSet().add(g2);
+        Author a3 = new Author(id++, "Tyler", "Ann");
+        a3.getBookSet().add(b5);
+        a3.getBookSet().add(b6);
+        data.add(a3);
         
         return data;
     }

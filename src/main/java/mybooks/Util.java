@@ -9,10 +9,26 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeModel;
+import static mybooks.Log.ALL;
+import mybooks.ui.AuthorPanel;
 import mybooks.ui.PopupListener;
 
 public class Util
 {
+    
+    public static AuthorPanel createPanel(Author a)
+    {
+        AuthorPanel p = new AuthorPanel();
+        p.idField.setText(a.getId().toString());
+        p.firstNameField.setText(a.getFirstName());
+        p.lastNameField.setText(a.getLastName());
+        return p;
+    }
+    
+    public static Log log(Class c)
+    {
+        return new Log(c, ALL);
+    }
     
     public static PopupListener popup(JMenuItem ... items)
     {
