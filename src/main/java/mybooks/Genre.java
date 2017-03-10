@@ -20,6 +20,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g")
     , @NamedQuery(name = "Genre.findById", query = "SELECT g FROM Genre g WHERE g.id = :id")
     , @NamedQuery(name = "Genre.findByTitle", query = "SELECT g FROM Genre g WHERE g.title = :title")
+    , @NamedQuery(name = "Genre.findLikeTitle", query = "SELECT g from Genre g WHERE g.title like :title")
 })
 public class Genre implements Serializable {
 
@@ -107,6 +108,6 @@ public class Genre implements Serializable {
     @Override
     public String toString()
     {
-        return "mybooks.Genre[ id=" + id + " ]";
+        return title;
     }
 }

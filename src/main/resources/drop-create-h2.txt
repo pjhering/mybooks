@@ -41,3 +41,14 @@ create table if not exists book_genre
     foreign key (book_id) references book (id) on delete cascade,
     foreign key (genre_id) references genre (id) on delete cascade
 );
+
+insert into genre (title) values ('history');
+insert into genre (title) values ('computer');
+insert into genre (title) values ('comics');
+insert into genre (title) values ('fiction');
+insert into genre (title) values ('religion');
+insert into genre (title) values ('art');
+insert into genre (title) values ('craft');
+insert into genre (title) values ('economics');
+insert into genre (title) values ('politics');
+insert into genre (title) values ('biography');

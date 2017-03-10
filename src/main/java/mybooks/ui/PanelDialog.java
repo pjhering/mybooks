@@ -1,13 +1,18 @@
 package mybooks.ui;
 
 import java.awt.BorderLayout;
+import static java.awt.BorderLayout.CENTER;
+import static java.awt.BorderLayout.SOUTH;
 import java.awt.Dialog;
+import java.awt.FlowLayout;
 import java.awt.Frame;
+import java.awt.GridLayout;
 import static java.util.Objects.requireNonNull;
 import static javax.swing.BorderFactory.createEmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
 public class PanelDialog<P extends ValidPanel>
 {
@@ -15,7 +20,7 @@ public class PanelDialog<P extends ValidPanel>
     private final P panel;
     private final JButton saveButton, cancelButton;
     private final JPanel buttonPanel, flowPanel, content;
-    private final JDialog dialog;
+    private JDialog dialog;
     private boolean saved;
     
     public PanelDialog(String title, P panel)
@@ -56,7 +61,7 @@ public class PanelDialog<P extends ValidPanel>
     
     private P init()
     {
-        dialog.setContenPane(content);
+        dialog.setContentPane(content);
         dialog.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         dialog.pack();
         dialog.setLocationRelativeTo(dialog.getOwner());
@@ -67,7 +72,7 @@ public class PanelDialog<P extends ValidPanel>
     
     private void doSaveAction()
     {
-        if(panel.validate())
+        if(panel.doValidation())
         {
             saved = true;
             dialog.setVisible(false);

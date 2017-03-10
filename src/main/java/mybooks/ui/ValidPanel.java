@@ -4,5 +4,5 @@ import javax.swing.JPanel;
 
 public abstract class ValidPanel extends JPanel
 {
-    public abstract boolean validate();
+    public abstract boolean doValidation();
 }

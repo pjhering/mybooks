@@ -47,7 +47,7 @@ public class AuthorPanel extends ValidPanel
     }
     
     @Override
-    public boolean validate()
+    public boolean doValidation()
     {
         return true;//TODO
     }

@@ -5,13 +5,12 @@ import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.EAST;
 import static java.awt.BorderLayout.NORTH;
 import static javax.swing.BorderFactory.createEmptyBorder;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import static javax.swing.JSplitPane.HORIZONTAL_SPLIT;
-import javax.swing.JTextField;
 import javax.swing.JTree;
 
 public class Top
@@ -20,32 +19,30 @@ public class Top
     public final JFrame frame;
     public final JSplitPane split;
     public final JTree tree;
-    public final JTextField query;
-    public final JComboBox<String> domain;
     private final JScrollPane scroll;
-    private final JPanel left, north, empty;
+    private final JPanel empty;
+    public final JMenuItem addAuthor;
+    public final JMenuItem removeAuthor;
+    public final JMenuItem addBook;
+    public final JMenuItem removeBook;
+    public final JMenuItem addGenre;
+    public final JMenuItem removeGenre;
     
     public Top()
     {
-        query = new JTextField(30);
-        domain = new JComboBox<>(new String[]{"author", "title", "isbn", "genre"});
-        
-        north = new JPanel(new BorderLayout(0, 0));
-        north.add(query, CENTER);
-        north.add(domain, EAST);
-        
         tree = new JTree();
         scroll = new JScrollPane(tree);
-        
-        left = new JPanel(new BorderLayout(5, 5));
-        left.add(north, NORTH);
-        left.add(scroll, CENTER);
-        
         empty = new JPanel();
+        addAuthor = new JMenuItem("add author");
+        removeAuthor = new JMenuItem("remove author");
+        addBook = new JMenuItem("add book");
+        removeBook = new JMenuItem("remove book");
+        addGenre = new JMenuItem("add genre");
+        removeGenre = new JMenuItem("remove genre");
         
         split = new JSplitPane(HORIZONTAL_SPLIT);
         split.setOneTouchExpandable(true);
-        split.setLeftComponent(left);
+        split.setLeftComponent(scroll);
         split.setRightComponent(empty);
         split.setBorder(createEmptyBorder(10, 10, 10, 10));
         

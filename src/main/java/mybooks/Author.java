@@ -1,6 +1,7 @@
 package mybooks;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -36,7 +37,7 @@ public class Author implements Serializable {
     @Column(name = "FIRST_NAME")
     private String firstName;
     @ManyToMany(mappedBy = "authorSet")
-    private Set<Book> bookSet;
+    private Set<Book> bookSet = new HashSet<>();
 
     public Author()
     {
@@ -51,6 +52,13 @@ public class Author implements Serializable {
     {
         this.id = id;
         this.lastName = lastName;
+    }
+
+    public Author(Long id, String lastName, String firstName)
+    {
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
     }
 
     public Long getId()
@@ -120,6 +128,6 @@ public class Author implements Serializable {
     @Override
     public String toString()
     {
-        return "mybooks.Author[ id=" + id + " ]";
+        return firstName + " " + lastName;
     }
 }
