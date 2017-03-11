@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.WEST;
 import java.awt.GridLayout;
+import static java.lang.Character.isDigit;
 import javax.swing.JLabel;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -49,6 +51,46 @@ public class BookPanel extends ValidPanel
     @Override
     public boolean doValidation()
     {
-        return true;//TODO
+        String title = titleField.getText();
+        if(title == null || title.trim().length() == 0)
+        {
+            showMessageDialog(this, "title is required");
+            titleField.requestFocus();
+            return false;
+        }
+        titleField.setText(title.trim());
+        
+        String isbn = isbnField.getText();
+        if(isbn != null && isbn.trim().length() > 0)
+        {
+            isbn = isbn.trim();
+            isbnField.setText(isbn);
+            char[] chars = isbn.toCharArray();
+            //is at least 10 characters in length
+            if(chars.length < 10)
+            {
+                showMessageDialog(this, "isbn must be at least 10 characters");
+                isbnField.requestFocus();
+                return false;
+            }
+            //starts and ends with digit
+            if(!isDigit(chars[0]) || !isDigit(chars[chars.length - 1]))
+            {
+                showMessageDialog(this, "isbn must begin and end with a digit");
+                isbnField.requestFocus();
+                return false;
+            }
+            //contains only digits and hyphens
+            for(char c : chars)
+            {
+                if(c != '-' && !isDigit(c))
+                {
+                    showMessageDialog(this, "isbn my only contain digits and hyphens");
+                    isbnField.requestFocus();
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

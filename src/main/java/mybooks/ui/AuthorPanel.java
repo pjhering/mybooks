@@ -62,7 +62,7 @@ public class AuthorPanel extends ValidPanel
                 return true;
             }
         }
-        showMessageDialog("last name is required", WARNING_MESSAGE);
+        showMessageDialog(this, "last name is required");
         lastNameField.requestFocus();
         return false;
     }

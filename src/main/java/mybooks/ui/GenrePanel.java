@@ -5,6 +5,7 @@ import static java.awt.BorderLayout.CENTER;
 import static java.awt.BorderLayout.WEST;
 import java.awt.GridLayout;
 import javax.swing.JLabel;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -45,6 +46,19 @@ public class GenrePanel extends ValidPanel
     @Override
     public boolean doValidation()
     {
-        return true;//TODO
+        String title = titleField.getText();
+        if(title != null)
+        {
+            title = title.trim();
+            titleField.setText(title);
+            
+            if(title.length() > 0)
+            {
+                return true;
+            }
+        }
+        showMessageDialog(this, "title is required");
+        titleField.requestFocus();
+        return false;
     }
 }
