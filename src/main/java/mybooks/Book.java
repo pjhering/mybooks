@@ -6,8 +6,9 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -19,17 +20,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BOOK")
 @NamedQueries(
+        {
+            @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b")
+            , @NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.id = :id")
+            , @NamedQuery(name = "Book.findByTitle", query = "SELECT b FROM Book b WHERE b.title = :title")
+            , @NamedQuery(name = "Book.findByIsbn", query = "SELECT b FROM Book b WHERE b.isbn = :isbn")
+        })
+public class Book implements Serializable
 {
-    @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b")
-    , @NamedQuery(name = "Book.findById", query = "SELECT b FROM Book b WHERE b.id = :id")
-    , @NamedQuery(name = "Book.findByTitle", query = "SELECT b FROM Book b WHERE b.title = :title")
-    , @NamedQuery(name = "Book.findByIsbn", query = "SELECT b FROM Book b WHERE b.isbn = :isbn")
-})
-public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
@@ -45,7 +47,7 @@ public class Book implements Serializable {
     {
         @JoinColumn(name = "AUTHOR_ID", referencedColumnName = "ID")
     })
-    @ManyToMany
+    @ManyToMany(fetch = EAGER)
     private Set<Author> authorSet = new HashSet<>();
     @JoinTable(name = "BOOK_GENRE", joinColumns =
     {
@@ -54,7 +56,7 @@ public class Book implements Serializable {
     {
         @JoinColumn(name = "GENRE_ID", referencedColumnName = "ID")
     })
-    @ManyToMany
+    @ManyToMany(fetch = EAGER)
     private Set<Genre> genreSet = new HashSet<>();
 
     public Book()

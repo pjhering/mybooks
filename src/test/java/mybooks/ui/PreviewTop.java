@@ -11,7 +11,7 @@ import static mybooks.Util.createTreeModel;
 
 public class PreviewTop
 {
-    
+
     private static final Top TOP = new Top();
 
     public static void main(String[] args)
@@ -23,12 +23,12 @@ public class PreviewTop
         TOP.frame.setLocationRelativeTo(null);
         TOP.frame.setVisible(true);
     }
-    
+
     private static List<Author> testData()
     {
         List<Author> data = new ArrayList<>();
         long id = 1L;
-        
+
         Genre g1 = new Genre(id++, "Comics");
         Book b1 = new Book(id++, "Madman");
         b1.getGenreSet().add(g1);
@@ -43,7 +43,7 @@ public class PreviewTop
         Author a4 = new Author(id++, "Moore", "Alan");
         a4.getBookSet().add(b7);
         data.add(a4);
-        
+
         Genre g2 = new Genre(id++, "Fiction");
         Book b3 = new Book(id++, "Slaughterhouse 5");
         b3.getGenreSet().add(g2);
@@ -61,7 +61,7 @@ public class PreviewTop
         a3.getBookSet().add(b5);
         a3.getBookSet().add(b6);
         data.add(a3);
-        
+
         return data;
     }
 }

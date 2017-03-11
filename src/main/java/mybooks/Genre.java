@@ -5,8 +5,9 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -16,24 +17,25 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "GENRE")
 @NamedQueries(
+        {
+            @NamedQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g")
+            , @NamedQuery(name = "Genre.findById", query = "SELECT g FROM Genre g WHERE g.id = :id")
+            , @NamedQuery(name = "Genre.findByTitle", query = "SELECT g FROM Genre g WHERE g.title = :title")
+            , @NamedQuery(name = "Genre.findLikeTitle", query = "SELECT g from Genre g WHERE g.title like :title")
+        })
+public class Genre implements Serializable
 {
-    @NamedQuery(name = "Genre.findAll", query = "SELECT g FROM Genre g")
-    , @NamedQuery(name = "Genre.findById", query = "SELECT g FROM Genre g WHERE g.id = :id")
-    , @NamedQuery(name = "Genre.findByTitle", query = "SELECT g FROM Genre g WHERE g.title = :title")
-    , @NamedQuery(name = "Genre.findLikeTitle", query = "SELECT g from Genre g WHERE g.title like :title")
-})
-public class Genre implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
     @Basic(optional = false)
     @Column(name = "TITLE")
     private String title;
-    @ManyToMany(mappedBy = "genreSet")
+    @ManyToMany(mappedBy = "genreSet", fetch = EAGER)
     private Set<Book> bookSet;
 
     public Genre()

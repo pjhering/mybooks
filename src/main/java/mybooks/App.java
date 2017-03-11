@@ -5,13 +5,12 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import static java.lang.System.exit;
 import java.util.List;
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 import static mybooks.Log.INFO;
 import static mybooks.Util.createPanel;
@@ -35,7 +34,7 @@ class App
     App(EntityManagerFactory emf)
     {
         LOG.write(INFO, "App(EntityManagerFactory)");
-        this.FACTORY = Objects.requireNonNull(emf);
+        this.FACTORY = requireNonNull(emf);
         rootPopup = popup(top.addAuthor);
         authorPopup = popup(top.removeAuthor, top.addBook);
         bookPopup = popup(top.removeBook, top.addGenre);
@@ -58,14 +57,14 @@ class App
         top.removeBook.addActionListener(l5 -> doRemoveBookAction());
         top.removeGenre.addActionListener(l6 -> doRemoveGenreAction());
     }
-    
+
     void start()
     {
         LOG.write(INFO, "start()");
         refreshTreeModel();
         initTopFrame();
     }
-    
+
     private void refreshTreeModel()
     {
         LOG.write(INFO, "refreshTreeModel()");
@@ -75,10 +74,10 @@ class App
         List<Author> data = q.getResultList();
         em.getTransaction().commit();
         em.close();
-        
+
         top.tree.setModel(createTreeModel(data));
     }
-    
+
     private void initTopFrame()
     {
         LOG.write(INFO, "initTopFrame()");
@@ -87,7 +86,7 @@ class App
         top.frame.setLocationRelativeTo(null);
         top.frame.setVisible(true);
     }
-    
+
     private void shutdown()
     {
         LOG.write(INFO, "shutdown()");
@@ -96,67 +95,76 @@ class App
         FACTORY.close();
         exit(0);
     }
-    
+
     private void doTreeSelectionChanged()
     {
         LOG.write(INFO, "doTreeSelectionChanged()");
         TreePath path = top.tree.getSelectionPath();
         DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
         Object obj = node.getUserObject();
-        
+
         if(obj instanceof Author)
         {
-            doAuthorSelected((Author)obj);
-        }
-        else if(obj instanceof Book)
-        {
-            doBookSelected((Book)obj);
-        }
-        else if (obj instanceof Genre)
-        {
-            doGenreSelected((Genre)obj);
-        }
-        else if(obj instanceof String)
-        {
-            String str = (String) obj;
-            if(str.equals("authors"))
-            {
-                doRootSelected();
-            }
-            else
-            {
-                doLabelSelected();
-            }
+            doAuthorSelected((Author) obj);
         }
         else
         {
-            top.setView(null);
+            if(obj instanceof Book)
+            {
+                doBookSelected((Book) obj);
+            }
+            else
+            {
+                if(obj instanceof Genre)
+                {
+                    doGenreSelected((Genre) obj);
+                }
+                else
+                {
+                    if(obj instanceof String)
+                    {
+                        String str = (String) obj;
+                        if(str.equals("authors"))
+                        {
+                            doRootSelected();
+                        }
+                        else
+                        {
+                            doLabelSelected();
+                        }
+                    }
+                    else
+                    {
+                        top.setView(null);
+                    }
+                }
+            }
         }
     }
-    
+
     private void doRootSelected()
     {
         LOG.write(INFO, "doRootSelected()");
         top.setView(null);
     }
-    
+
     private void doLabelSelected()
     {
         LOG.write(INFO, "doLabelSelected()");
         top.setView(null);
     }
-    
+
     private void doAuthorSelected(Author a)
     {
         LOG.write(INFO, "doAuthorSelected()");
         top.setView(createPanel(a));
     }
-    
+
     private void doBookSelected(Book b)
     {
         LOG.write(INFO, "doBookSelected()");
     }
-    
+
     private void doGenreSelected(Genre g)
     {
         LOG.write(INFO, "doGenreSelected()");

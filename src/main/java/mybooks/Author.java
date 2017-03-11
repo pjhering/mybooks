@@ -6,8 +6,9 @@ import java.util.Set;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import static javax.persistence.FetchType.EAGER;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -17,17 +18,18 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AUTHOR")
 @NamedQueries(
+        {
+            @NamedQuery(name = "Author.findAll", query = "SELECT a FROM Author a")
+            , @NamedQuery(name = "Author.findById", query = "SELECT a FROM Author a WHERE a.id = :id")
+            , @NamedQuery(name = "Author.findByLastName", query = "SELECT a FROM Author a WHERE a.lastName = :lastName")
+            , @NamedQuery(name = "Author.findByFirstName", query = "SELECT a FROM Author a WHERE a.firstName = :firstName")
+        })
+public class Author implements Serializable
 {
-    @NamedQuery(name = "Author.findAll", query = "SELECT a FROM Author a")
-    , @NamedQuery(name = "Author.findById", query = "SELECT a FROM Author a WHERE a.id = :id")
-    , @NamedQuery(name = "Author.findByLastName", query = "SELECT a FROM Author a WHERE a.lastName = :lastName")
-    , @NamedQuery(name = "Author.findByFirstName", query = "SELECT a FROM Author a WHERE a.firstName = :firstName")
-})
-public class Author implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
@@ -36,7 +38,7 @@ public class Author implements Serializable {
     private String lastName;
     @Column(name = "FIRST_NAME")
     private String firstName;
-    @ManyToMany(mappedBy = "authorSet")
+    @ManyToMany(mappedBy = "authorSet", fetch = EAGER)
     private Set<Book> bookSet = new HashSet<>();
 
     public Author()
